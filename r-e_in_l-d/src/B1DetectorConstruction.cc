@@ -54,10 +54,11 @@
 #include "G4TransportationManager.hh"
 
 // The main parameters
-G4double distance = 100*cm;
-G4double alpha =  0;
-//G4double alpha =  M_PI/4;
-G4double Electric_field_y = 0.2*kilovolt/cm;   // directed in +y-direction!! (so, it eccelerates elelctrons, which are negative)
+G4double kinetic_energy = 1000*keV;
+G4double distance = 200*cm;
+//G4double alpha =  0;
+G4double alpha =  M_PI/6;
+G4double Electric_field_y = 10.0*kilovolt/cm;   // directed in +y-direction!! (so, it eccelerates elelctrons, which are negative)
 
 // It'll be needed for the electric field.
 
@@ -95,8 +96,8 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
 
   G4double env_sizeXZ = 2.0*distance + det_sizeY + cover_sizeY;
   G4double env_sizeY = distance + det_sizeY + cover_sizeY+space_under_detector;
-  G4Material* env_mat = nist->FindOrBuildMaterial("G4_Galactic");
-//  G4Material* env_mat = nist->FindOrBuildMaterial("G4_AIR");
+  //G4Material* env_mat = nist->FindOrBuildMaterial("G4_Galactic");
+  G4Material* env_mat = nist->FindOrBuildMaterial("G4_AIR");
    
   // Option to switch on/off checking of volumes overlaps
   //
@@ -107,8 +108,8 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
   //
   G4double world_sizeXZ = 1.2*env_sizeXZ;
   G4double world_sizeY  = 1.2*env_sizeY;
-  G4Material* world_mat = nist->FindOrBuildMaterial("G4_Galactic");
-//  G4Material* world_mat = nist->FindOrBuildMaterial("G4_AIR");
+  //G4Material* world_mat = nist->FindOrBuildMaterial("G4_Galactic");
+  G4Material* world_mat = nist->FindOrBuildMaterial("G4_AIR");
   
   G4Box* solidWorld =    
     new G4Box("World",                       //its name
@@ -198,7 +199,7 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
 // // G4ThreeVector pos1 = G4ThreeVector(1*m, 1*m, 0);
   G4ThreeVector pos1 = G4ThreeVector((distance+det_sizeY*0.5+cover_sizeY)*sin(alpha*rad), -(distance+det_sizeY*0.5+cover_sizeY)*cos(alpha*rad) + env_sizeY/2.0, 0);
 
- G4Material* shape1_mat = nist->FindOrBuildMaterial("G4_Al");
+ //G4Material* shape1_mat = nist->FindOrBuildMaterial("G4_Al");
 
 
   // Box shape    - DETECTOR
@@ -276,8 +277,8 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
                     
   // Set Shape1 as scoring volume (detector)
   //
-  //fScoringVolume = logicShape1;
-  fScoringVolume = logicEnv;
+  fScoringVolume = logicShape1;
+  //fScoringVolume = logicEnv;
 
 
 

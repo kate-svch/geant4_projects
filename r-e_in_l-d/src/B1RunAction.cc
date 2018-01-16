@@ -34,6 +34,9 @@
 extern G4double Electric_field_y;
 extern G4double distance;
 extern G4double alpha;
+//extern G4String kin_en;
+extern G4double kinetic_energy;
+extern G4String is_it_energy;
 // #include "B1Run.hh"
 
 #include "G4RunManager.hh"
@@ -112,20 +115,30 @@ B1RunAction::B1RunAction()
   convert_angle << alpha/M_PI*180.0;     // insert the textual representation of 'Number' in the characters in the stream
   this_string_is_angle = convert_angle.str();
 
+  G4String this_string_is_energy;          // string which will contain the result
+  std::ostringstream convert_energy;   // stream used for the conversion
+  convert_energy << kinetic_energy/keV;     // insert the textual representation of 'Number' in the characters in the stream
+  this_string_is_energy = convert_energy.str();
+
+
   G4String physical_value_and_field ("Edep in detector, El_field = ");
   G4String unit_of_Energy (" keV/cm");
   G4String about_distance (", distance = ");
   G4String unit_of_distance (" cm");
   G4String about_angle (", angle = ");
   G4String unit_of_angle (" degrees");
+  G4String about_energy (", energy = ");
+  G4String unit_of_energy (" keV");
+
 
   G4String title_preliminary = physical_value_and_field + this_string_is_field + unit_of_Energy + about_distance +
-          this_string_is_distance + unit_of_distance + about_angle + this_string_is_angle + unit_of_angle;
+          this_string_is_distance + unit_of_distance + about_angle + this_string_is_angle +
+          unit_of_angle + about_energy + this_string_is_energy + unit_of_energy;
 
   const G4String& title = title_preliminary;
 
     analysisManager->CreateH1("fEder", title,
-                             100, 0., 1.0*MeV,  "MeV");
+                             100, 0., 5.0*MeV,  "MeV");
 
 
 // analysisManager->CreateH1("fEder", "Edep in detector",

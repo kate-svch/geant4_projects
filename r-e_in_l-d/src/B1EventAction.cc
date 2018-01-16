@@ -40,6 +40,18 @@
 //#include "Randomize.hh"
 //#include <iomanip>
 
+
+//G4double kinetic_energy;
+
+// we'll get now the particle energy to print in on the histogram
+
+//G4Event* the_event;
+
+//  G4PrimaryVertex* primaryVertex = the_event->GetPrimaryVertex();
+//  G4PrimaryParticle* primaryParticle = primaryVertex->GetPrimary();
+//  G4double  kinetic_energy = primaryParticle->GetKineticEnergy();
+
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 B1EventAction::B1EventAction(B1RunAction* runAction)
@@ -113,6 +125,7 @@ void B1EventAction::EndOfEventAction(const G4Event* )
 //       << G4endl;
 //  }
 }
+
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

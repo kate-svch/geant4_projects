@@ -40,7 +40,17 @@
 #include "G4SystemOfUnits.hh"
 #include "Randomize.hh"
 
+#include "G4UIcmdWithADoubleAndUnit.hh"  // this'll make transportation of energy-value to the label of histogram work
+#include "G4ParticleGunMessenger.hh" // this is "an example custom messanger"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+// we'll use it in B1RunAction.cc
+extern G4double kinetic_energy;
+//G4String kin_en;
+//G4String is_it_energy;
+
+
 
 B1PrimaryGeneratorAction::B1PrimaryGeneratorAction()
 : G4VUserPrimaryGeneratorAction(),
@@ -57,7 +67,7 @@ B1PrimaryGeneratorAction::B1PrimaryGeneratorAction()
 //  G4ParticleDefinition* particle  = particleTable->FindParticle(particleName="alpha");
   fParticleGun->SetParticleDefinition(particle);
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,-1.,0.));
-  fParticleGun->SetParticleEnergy(7.*MeV);
+  fParticleGun->SetParticleEnergy(kinetic_energy);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -101,9 +111,9 @@ void B1PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
      "MyCode0002",JustWarning,msg);
   }
 
-  G4double size = 0.7;
-  G4double x0 = 0.05* envSizeXZ;
-//  G4double x0 = size * envSizeXZ * (G4UniformRand()-0.5);
+  G4double size = 0.05;
+ // G4double x0 = 0.05* envSizeXZ;
+  G4double x0 = size * envSizeXZ * (G4UniformRand()-0.5);
   G4double z0 = size * envSizeXZ * (G4UniformRand()-0.5);
 //  G4double x0 = 0;
 //  G4double y0 = 0;
@@ -113,6 +123,24 @@ void B1PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));
 
   fParticleGun->GeneratePrimaryVertex(anEvent);
+
+
+// we'll get now the particle energy to print in on the histogram
+
+//  G4PrimaryVertex* primaryVertex = anEvent->GetPrimaryVertex();
+//  G4PrimaryParticle* primaryParticle = primaryVertex->GetPrimary();
+//  kinetic_energy = primaryParticle->GetKineticEnergy();
+//  kinetic_energy+=2*MeV;
+
+//  energyCmd = new G4UIcmdWithADoubleAndUnit("/gun/energy",this);
+//  G4ParticleGunMessenger::energyCmd->SetGuidance("Set kinetic energy.");
+//  energyCmd->SetParameterName("Energy",true,true);
+//  energyCmd->SetDefaultUnit("MeV");
+//  energyCmd->SetUnitCandidates("eV keV MeV GeV TeV");
+//  kin_en = energyCmd->ConvertToString(fParticleGun->GetParticleEnergy(),"MeV");
+
+  // G4String is_it_energy = G4ParticleGunMessenger::GetCurrentValue(energyCmd);
+   // is_it_energy = G4ParticleGunMessenger::GetCurrentValue(energyCmd);
 
 
 //        G4cerr << G4endl  << G4endl
