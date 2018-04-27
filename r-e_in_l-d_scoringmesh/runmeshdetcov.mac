@@ -1,0 +1,64 @@
+########################################
+#
+# define scoring mesh - DETECTOR
+#
+/score/create/boxMesh boxMesh_det
+#
+/score/mesh/boxSize 500. 40. 500. 
+/score/mesh/nBin 20 20 20
+/score/mesh/translate/xyz 0 -950.01 0
+#
+/score/quantity/energyDeposit eDepel
+/score/filter/particle eMinusFilter e-
+
+/score/quantity/energyDeposit eDepgamma
+/score/filter/particle gammaFilter gamma
+#
+/score/close
+#
+
+# define scoring mesh - COVER
+#
+/score/create/boxMesh boxMesh_cov
+#
+/score/mesh/boxSize 500. 0.01 500. 
+/score/mesh/nBin 20 20 20
+/score/mesh/translate/xyz 0 -910. 0
+#
+/score/quantity/energyDeposit eDepel
+/score/filter/particle eMinusFilter e-
+
+/score/quantity/energyDeposit eDepgamma
+/score/filter/particle gammaFilter gamma
+#
+/score/close
+#
+
+/score/list
+#
+########################################
+#
+/vis/disable
+#/control/verbose 2
+#/run/verbose 1
+#######/event/verbose 1
+#######/tracking/verbose 1
+
+/gun/particle e-
+/run/beamOn 10
+/vis/enable
+#
+########################################
+# drawing projections
+#
+/score/drawProjection boxMesh_det eDepel
+#/score/drawProjection boxMesh_cov eDepel
+########################################
+# Dump scores to a file
+#
+/score/dumpQuantityToFile boxMesh_det eDepel eDep_el_det.txt
+/score/dumpQuantityToFile boxMesh_det eDepgamma eDep_gamma_det.txt
+/score/dumpQuantityToFile boxMesh_cov eDepel eDep_el_cov.txt
+/score/dumpQuantityToFile boxMesh_cov eDepgamma eDep_gamma_cov.txt
+#
+#
