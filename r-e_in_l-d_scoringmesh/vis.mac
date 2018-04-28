@@ -163,4 +163,4 @@
 
 
 #/vis/scene/endOfEventAction accumulate 100
-/vis/scene/endOfEventAction accumulate
+/vis/scene/endOfEventAction accumulate 100

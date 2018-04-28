@@ -1,0 +1,64 @@
+########################################
+#
+# define scoring mesh - DETECTOR
+#
+/score/create/cylinderMesh cylinderMesh_det
+#
+/score/mesh/cylinderSize 76. 76. mm
+/score/mesh/translate/xyz 100 0. -507.65 cm
+/score/mesh/nBin 20 20 20
+#
+/score/quantity/energyDeposit eDepel
+/score/filter/particle eMinusFilter e-
+
+/score/quantity/energyDeposit eDepgamma
+/score/filter/particle gammaFilter gamma
+#
+/score/close
+#
+
+# define scoring mesh - COVER
+#
+#/score/create/boxMesh boxMesh_cov
+#
+#/score/mesh/boxSize 500. 0.01 500. 
+#/score/mesh/nBin 20 20 20
+#/score/mesh/translate/xyz 0 -910. 0
+#
+#/score/quantity/energyDeposit eDepel
+#/score/filter/particle eMinusFilter e-
+
+#/score/quantity/energyDeposit eDepgamma
+#/score/filter/particle gammaFilter gamma
+#
+/score/close
+#
+
+/score/list
+#
+########################################
+#
+/vis/disable
+#/control/verbose 2
+#/run/verbose 1
+#######/event/verbose 1
+#######/tracking/verbose 1
+
+/gun/particle e-
+/run/beamOn 100
+/vis/enable
+#
+########################################
+# drawing projections
+#
+/score/drawProjection cylinderMesh_det eDepel
+#/score/drawProjection boxMesh_cov eDepel
+########################################
+# Dump scores to a file
+#
+/score/dumpQuantityToFile cylinderMesh_det eDepel eDep/eDep_el_det.txt
+/score/dumpQuantityToFile cylinderMesh_det eDepgamma eDep/eDep_gamma_det.txt
+#/score/dumpQuantityToFile boxMesh_cov eDepel eDep_el_cov.txt
+#/score/dumpQuantityToFile boxMesh_cov eDepgamma eDep_gamma_cov.txt
+#
+#

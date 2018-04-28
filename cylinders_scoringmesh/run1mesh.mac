@@ -1,0 +1,43 @@
+########################################
+#
+# define scoring mesh
+#
+/score/create/boxMesh boxMesh_1
+#
+/score/mesh/boxSize 10. 10. 10. cm
+/score/mesh/nBin 20 20 20
+#
+/score/quantity/energyDeposit eDepel
+/score/filter/particle eMinusFilter e-
+
+/score/quantity/energyDeposit eDepgamma
+/score/filter/particle gammaFilter gamma
+#
+/score/close
+#
+/score/list
+#
+########################################
+#
+/vis/disable
+#/control/verbose 2
+#/run/verbose 1
+#######/event/verbose 1
+#######/tracking/verbose 1
+
+/gun/particle e-
+/run/beamOn 10
+/vis/enable
+#
+########################################
+# drawing projections
+#
+/score/drawProjection boxMesh_1 eDepel
+#/score/drawProjection boxMesh_1 eDepel
+########################################
+# Dump scores to a file
+#
+/score/dumpQuantityToFile boxMesh_1 eDepel eDepel.txt
+#/score/dumpQuantityToFile boxMesh_1 eDepgamma eDepgamma.txt
+#
+#
