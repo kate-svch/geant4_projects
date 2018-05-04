@@ -64,12 +64,12 @@ class F05DetectorConstruction : public G4VUserDetectorConstruction
  
      G4Material*        fVacuum;
 
-     G4double           fWorldSizeXY;
-     G4double           fWorldSizeZ;
+     G4double           world_sizeXY;
+     G4double           world_sizeZ;
 
-     G4Box*             fSolidWorld;    //pointer to the solid World
-     G4LogicalVolume*   fLogicWorld;    //pointer to the logical World
-     G4VPhysicalVolume* fPhysiWorld;    //pointer to the physical World
+     G4Box*             solidWorld;    //pointer to the solid World
+     G4LogicalVolume*   logicWorld;    //pointer to the logical World
+     G4VPhysicalVolume* physWorld;    //pointer to the physical World
 
      static G4ThreadLocal F05Field* fField;
 

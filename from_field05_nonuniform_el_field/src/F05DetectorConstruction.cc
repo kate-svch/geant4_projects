@@ -68,16 +68,28 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 // The main parameters
-G4double kinetic_energy = 7*keV;
+G4double kinetic_energy = 0.01*keV;
 G4double from_start_to_the_detector =  4.5*m;     // the parameter
 G4double distance = from_start_to_the_detector/2.;    // is used in what follows, it's an auxiliary unit!
 G4double from_axis_to_cylinder =  3.0*m;
+G4double from_electrode_to_edge_of_the_world = 10.0*cm;
 
+G4double det_sizeZ = 63.*mm;
+G4double det_radius = 63.*mm;
+G4double cover_sizeZ = 0.5*mm;
+G4double cover_thickness = 0.5*mm;
+G4double space_under_detector = 10*cm;
+G4double space_near_the_edge = 10*cm;
 
+G4double env_sizeXY = 2*( from_axis_to_cylinder + space_near_the_edge + det_radius + cover_thickness);
+G4double env_sizeZ = 2*(distance + det_sizeZ + cover_sizeZ + space_under_detector);
+
+G4double world_sizeXY = 1.2*env_sizeXY;
+G4double world_sizeZ = 1.2*env_sizeZ;
 
 F05DetectorConstruction::F05DetectorConstruction()
- : fVacuum(0), fWorldSizeXY(0), fWorldSizeZ(0), 
-   fSolidWorld(0), fLogicWorld(0), fPhysiWorld(0)
+ : fVacuum(0), world_sizeXY(0), world_sizeZ(0),
+   solidWorld(0), logicWorld(0), physWorld(0)
 {
   // materials
   DefineMaterials();
@@ -111,23 +123,12 @@ G4VPhysicalVolume* F05DetectorConstruction::Construct()
 
       // Envelope, detector and cover parameters
 
-      G4double det_sizeZ = 63.*mm;
-      G4double det_radius = 63.*mm;
-      G4double cover_sizeZ = 0.5*mm;
-      G4double cover_thickness = 0.5*mm;
-      G4double space_under_detector = 10*cm;
-      G4double space_near_the_edge = 10*cm;
-
-
-      G4double env_sizeXY = 2*( from_axis_to_cylinder + space_near_the_edge + det_radius + cover_thickness);
-      G4double env_sizeZ = 2*(distance + det_sizeZ + cover_sizeZ + space_under_detector);
       G4Material* env_mat = nist->FindOrBuildMaterial("G4_Galactic");
 //      G4Material* env_mat = nist->FindOrBuildMaterial("G4_AIR");
 
 
       // additional detector, for temporary use - from Kostinsky geometry
-      G4double det_sizeXY = 100.*cm;
-
+      G4double det_sizeXY = 0.01*cm;
 
 
       // Option to switch on/off checking of volumes overlaps
@@ -137,21 +138,22 @@ G4VPhysicalVolume* F05DetectorConstruction::Construct()
       //
       // World
       //
-      G4double world_sizeXY = 1.2*env_sizeXY;
-      G4double world_sizeZ = 1.2*env_sizeZ;
+
+    world_sizeXY = 1.2*env_sizeXY;
+    world_sizeZ = 1.2*env_sizeZ;
       G4Material* world_mat = nist->FindOrBuildMaterial("G4_Galactic");
     //  G4Material* world_mat = nist->FindOrBuildMaterial("G4_AIR");
 
-      G4Box* solidWorld =
+      solidWorld =
         new G4Box("World",                       //its name
            0.5*world_sizeXY, 0.5*world_sizeXY, 0.5*world_sizeZ);     //its size
 
-      G4LogicalVolume* logicWorld =
+      logicWorld =
         new G4LogicalVolume(solidWorld,          //its solid
                             world_mat,           //its material
                             "World");            //its name
 
-      G4VPhysicalVolume* physWorld =
+      physWorld =
         new G4PVPlacement(0,                     //no rotation
                           G4ThreeVector(),       //at (0,0,0)
                           logicWorld,            //its logical volume
@@ -345,6 +347,9 @@ void F05DetectorConstruction::ConstructSDandField()
      fieldPropagator->SetMaximumEpsilonStep(epsMax);
 
      fieldManager->SetChordFinder(chordFinder);
+
+     G4bool allLocal = true;
+     logicWorld->SetFieldManager(fieldManager, allLocal);
   }
 }
 
