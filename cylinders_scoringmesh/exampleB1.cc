@@ -57,6 +57,16 @@ int main(int argc,char** argv)
     G4Colour::AddToMap("orange", orange);
 
 
+    // Choose the Random engine
+    //
+    G4Random::setTheEngine(new CLHEP::RanecuEngine);
+
+    G4int myseed = 1234;
+    if (argc  > 2) myseed = atoi(argv[argc-1]);
+
+
+    G4Random::setTheSeed(myseed);
+
 	
   // Detect interactive mode (if no arguments) and define UI session
   //
@@ -66,7 +76,7 @@ int main(int argc,char** argv)
   }
 
   // Choose the Random engine
-  G4Random::setTheEngine(new CLHEP::RanecuEngine);
+//  G4Random::setTheEngine(new CLHEP::RanecuEngine);
   
   // Construct the default run manager
   //
@@ -76,9 +86,11 @@ int main(int argc,char** argv)
   G4RunManager* runManager = new G4RunManager;
 #endif
 
+      G4Random::setTheSeed(myseed);
+
   // Activate UI-command base scorer
- // G4ScoringManager * scManager = G4ScoringManager::GetScoringManager();
- // scManager->SetVerboseLevel(1);
+  G4ScoringManager * scManager = G4ScoringManager::GetScoringManager();
+  scManager->SetVerboseLevel(1);
 
   // Set mandatory initialization classes
   //
