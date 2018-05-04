@@ -276,7 +276,7 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
          //                    NaI,
                              "Shape1");           //its name
 
-    G4ThreeVector pos1 = G4ThreeVector(0, 0. , -(distance+ det_sizeZ + cover_sizeZ));
+    G4ThreeVector pos1 = G4ThreeVector(0, 0. , -(distance+ 0.5*det_sizeZ + cover_sizeZ));
 
 
        new G4PVPlacement(0,                       //rotation
@@ -305,10 +305,11 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
       G4ThreeVector posCover = G4ThreeVector(0, 0,  -(distance + 0.5*cover_sizeZ) );
 
 
+
        new G4PVPlacement(0,                        //rotation
                          posCover,                    //at position
                          logicCover,             //its logical volume
-                         "Cover",                //its name
+                         "cover",                //its name
                          logicEnv,                //its mother  volume
                          false,                   //no boolean operation
                          0,                       //copy number

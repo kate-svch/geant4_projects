@@ -122,6 +122,9 @@
 /vis/geometry/set/colour Al_cover 0 1 0 0 1
 /vis/geometry/set/colour NaI_detector 0 0 1 0 1
 
+/vis/geometry/set/colour cover 0 1 0 0 1
+/vis/geometry/set/colour Shape1 0 0 1 0 1
+
 
 # Attach text to one edge of the scene
 /vis/set/textColour yellow
