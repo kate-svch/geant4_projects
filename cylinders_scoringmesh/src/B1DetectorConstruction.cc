@@ -339,11 +339,10 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
 
  //  G4UniformElectricField* entireVolumeField = new G4UniformElectricField(G4ThreeVector(0.0, 500.0*kilovolt/m, 0.0));
   G4UniformElectricField* entireVolumeField = new G4UniformElectricField(G4ThreeVector(0.0, 0.0, Electric_field_z));
-  // G4UniformElectricField* entireVolumeField = new G4UniformElectricField(G4ThreeVector(Electric_field_y, 0.0, 0.0));
 
-   //G4UniformElectricField* entireVolumeField = new G4UniformElectricField(G4ThreeVector(0.0, 0.0, 0.0));
+
    G4FieldManager* entireFieldMgrVolume = new   G4FieldManager(entireVolumeField);
-   G4bool includeDaugthers = true; // или true
+   G4bool includeDaugthers = true;
 
    // уравнение движения в поле
    fEquation = new G4EqMagElectricField(entireVolumeField);
