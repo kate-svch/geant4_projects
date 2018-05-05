@@ -45,6 +45,7 @@
 #include "G4RunManager.hh"
 #endif
 
+#include "G4ScoringManager.hh"
 #include "F05PhysicsList.hh"
 #include "F05DetectorConstruction.hh"
 
@@ -99,6 +100,11 @@ int main(int argc,char** argv)
   // Initialize G4 kernel
   //
   runManager->Initialize();
+
+  // Activate UI-command base scorer
+  G4ScoringManager * scManager = G4ScoringManager::GetScoringManager();
+  scManager->SetVerboseLevel(1);
+
 
 #ifdef G4VIS_USE
   // Initialize visualization

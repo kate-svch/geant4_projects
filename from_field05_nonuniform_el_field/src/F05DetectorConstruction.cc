@@ -128,7 +128,7 @@ G4VPhysicalVolume* F05DetectorConstruction::Construct()
 
 
       // additional detector, for temporary use - from Kostinsky geometry
-      G4double det_sizeXY = 0.01*cm;
+      G4double det_sizeXY = 100.0*cm;
 
 
       // Option to switch on/off checking of volumes overlaps
