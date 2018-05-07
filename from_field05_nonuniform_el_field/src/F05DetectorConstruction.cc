@@ -69,8 +69,8 @@
 
 // The main parameters
 //G4double kinetic_energy = 1000.*keV;
-G4double kinetic_energy = 100.*keV;
-G4double from_start_to_the_detector =  4.5*m;     // the parameter
+G4double kinetic_energy = 10.*keV;
+G4double from_start_to_the_detector =  4.5*m;     // the parameter - distance sfrom start of the particles to the plane of the detector
 G4double distance = from_start_to_the_detector/2.;    // is used in what follows, it's an auxiliary unit!
 G4double from_axis_to_cylinder =  3.0*m;
 G4double from_electrode_to_edge_of_the_world = 1.0*cm;
@@ -236,10 +236,18 @@ G4VPhysicalVolume* F05DetectorConstruction::Construct()
 
           // Box shape    - DETECTOR, TEMPORARY
 
-             G4Box* solidShape1 =
-             new G4Box("Shape1",                       //its name
-                0.5*det_sizeXY , 0.5*det_sizeXY, 0.5*det_sizeZ);     //its size
+//             G4Box* solidShape1 =
+//             new G4Box("Shape1",                       //its name
+//                0.5*det_sizeXY , 0.5*det_sizeXY, 0.5*det_sizeZ);     //its size
 
+
+//       G4Box* solidShape1 =
+//       new G4Box("Shape1",                       //its name
+//          1500*mm, 1500*mm, 500*mm);     //its size
+
+       G4Box* solidShape1 =
+       new G4Box("Shape1",                       //its name
+          10*mm, 10*mm, 10*mm);     //its size
 
            G4LogicalVolume* logicShape1 =
              new G4LogicalVolume(solidShape1,         //its solid
@@ -248,7 +256,8 @@ G4VPhysicalVolume* F05DetectorConstruction::Construct()
              //                    NaI,
                                  "Shape1");           //its name
 
-        G4ThreeVector pos1 = G4ThreeVector(0, 0. , -(distance+ 0.5*det_sizeZ + cover_sizeZ));
+//        G4ThreeVector pos1 = G4ThreeVector(0, 0. , -(distance+ 0.5*det_sizeZ + cover_sizeZ));
+                G4ThreeVector pos1 = G4ThreeVector(0, 0. , -1500*mm);
 
 
            new G4PVPlacement(0,                       //rotation

@@ -65,11 +65,11 @@ void F05Field::GetFieldValue( const G4double Point[4], G4double* Bfield ) const
 
   const G4double k_coef = 9.*std::pow(10,9)*volt*m/coulomb;
  // const G4double q_charge =10.*std::pow(10,-4)*coulomb;
-    const G4double q_charge =0.0001*std::pow(10,-4)*coulomb;
+    const G4double q_charge =1.*std::pow(10,-4)*coulomb;
 
   G4double Ex,Ey, Ez;
  
-  G4double D_distance = world_sizeZ + from_electrode_to_edge_of_the_world;
+  G4double D_distance = 0.5*world_sizeZ + from_electrode_to_edge_of_the_world;
   G4double lateral_R = std::sqrt(std::pow(Point[0],2) + std::pow(Point[1],2));
   G4double r_real = std::sqrt(std::pow(Point[0],2) + std::pow(Point[1],2) + std::pow(D_distance - Point[2], 2));
   G4double r_mirror = std::sqrt(std::pow(Point[0],2) + std::pow(Point[1],2) + std::pow(D_distance + Point[2], 2));
@@ -85,9 +85,9 @@ void F05Field::GetFieldValue( const G4double Point[4], G4double* Bfield ) const
 
 
   //  one charge in (0,0, D_distance) and it's MIRROR in (0,0, -D_distance)
-//  Ex = -k_coef*q_charge*Point[0]*(r_real_minus_three - r_mirror_minus_three);
-//  Ey = -k_coef*q_charge*Point[1]*(r_real_minus_three - r_mirror_minus_three);
-//  Ez = k_coef*q_charge*(r_real_minus_three*(D_distance - Point[2]) - r_mirror_minus_three*(D_distance + Point[2]));
+  Ex = -k_coef*q_charge*Point[0]*(r_real_minus_three - r_mirror_minus_three);
+  Ey = -k_coef*q_charge*Point[1]*(r_real_minus_three - r_mirror_minus_three);
+  Ez = k_coef*q_charge*(r_real_minus_three*(D_distance - Point[2]) + r_mirror_minus_three*(D_distance + Point[2]));
 
 
   // test field
@@ -95,10 +95,9 @@ void F05Field::GetFieldValue( const G4double Point[4], G4double* Bfield ) const
 //  Ey = k_coef*q_charge*Point[1]/std::pow(lateral_R, 3);
 //  Ez = k_coef*q_charge/(std::pow(D_distance/2,2) + std::pow(D_distance/2,2))/1000;
 
-  Ex = 0;
-//  Ey = -0.0001*tesla*Point[2]/D_distance;
-  Ey = 0;
-  Ez = 0;
+//  Ex = 0;
+//  Ey = -1.*tesla*Point[2]/D_distance;
+//  Ez = 0;
 
 
 //  if (posR>0){
