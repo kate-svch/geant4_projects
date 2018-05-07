@@ -124,24 +124,13 @@ void F05PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
      "MyCode0002",JustWarning,msg);
   }
 
-  G4double size = 0.45;
+  G4double size = 0.2;
   G4double x0 = size * envSizeXY * (G4UniformRand()-0.5);
   G4double y0 = size * envSizeXY * (G4UniformRand()-0.5);
 
   G4double z0 = 0.5 * envSizeZ;
 
-
-
-
-//  G4double x0 = 1.*m;
-//  G4double y0 =  0.00*m;
-//  G4double z0 =  0.00*m;
-
-
   fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));
-  //  fParticleGun->SetParticleEnergy(Kmu);
-//  fParticleGun->SetParticlePolarization(G4ThreeVector(0.,1.,0.));
-//  fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,1.,0.));
 
   fParticleGun->GeneratePrimaryVertex(anEvent);
 }

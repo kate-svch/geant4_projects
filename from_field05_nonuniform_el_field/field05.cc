@@ -63,6 +63,8 @@
 #include "G4UIExecutive.hh"
 #endif
 
+#include "QBBC.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 int main(int argc,char** argv)
@@ -86,14 +88,25 @@ int main(int argc,char** argv)
   G4RunManager * runManager = new G4RunManager;
 #endif
 
+  // Activate UI-command base scorer
+  G4ScoringManager * scManager = G4ScoringManager::GetScoringManager();
+  scManager->SetVerboseLevel(1);
+
   G4Random::setTheSeed(myseed);
 
   // Set mandatory initialization classes
   //
   // Detector construction
   runManager->SetUserInitialization(new F05DetectorConstruction());
+
+
   // Physics list
-  runManager->SetUserInitialization(new F05PhysicsList());
+//  runManager->SetUserInitialization(new F05PhysicsList());
+
+  G4VModularPhysicsList* physicsList = new QBBC;
+  physicsList->SetVerboseLevel(1);
+  runManager->SetUserInitialization(physicsList);
+
   // User action initialization
   runManager->SetUserInitialization(new F05ActionInitialization());
 
@@ -101,9 +114,6 @@ int main(int argc,char** argv)
   //
   runManager->Initialize();
 
-  // Activate UI-command base scorer
-  G4ScoringManager * scManager = G4ScoringManager::GetScoringManager();
-  scManager->SetVerboseLevel(1);
 
 
 #ifdef G4VIS_USE

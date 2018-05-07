@@ -61,6 +61,17 @@
 /vis/scene/endOfEventAction accumulate
 #
 
+# Name
+#/vis/set/textColour green
+#/vis/set/textLayout right
+#/vis/scene/add/text2D 0.9 -.9 24 ! ! this_one_really
+
+
+# Axes, scale, etc.
+/vis/scene/add/scale   # Simple scale line
+/vis/scene/add/axes    # Simple axes: x=red, y=green, z=blue.
+/vis/scene/add/eventID # Drawn at end of event
+/vis/scene/add/date    # Date stamp
 
 # Make the "World" box visible
 #/vis/geometry/set/visibility World 0 false

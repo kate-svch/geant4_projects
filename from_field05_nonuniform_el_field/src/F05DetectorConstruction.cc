@@ -68,11 +68,12 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 // The main parameters
-G4double kinetic_energy = 0.01*keV;
+//G4double kinetic_energy = 1000.*keV;
+G4double kinetic_energy = 100.*keV;
 G4double from_start_to_the_detector =  4.5*m;     // the parameter
 G4double distance = from_start_to_the_detector/2.;    // is used in what follows, it's an auxiliary unit!
 G4double from_axis_to_cylinder =  3.0*m;
-G4double from_electrode_to_edge_of_the_world = 10.0*cm;
+G4double from_electrode_to_edge_of_the_world = 1.0*cm;
 
 G4double det_sizeZ = 63.*mm;
 G4double det_radius = 63.*mm;
@@ -84,8 +85,9 @@ G4double space_near_the_edge = 10*cm;
 G4double env_sizeXY = 2*( from_axis_to_cylinder + space_near_the_edge + det_radius + cover_thickness);
 G4double env_sizeZ = 2*(distance + det_sizeZ + cover_sizeZ + space_under_detector);
 
-G4double world_sizeXY = 1.2*env_sizeXY;
-G4double world_sizeZ = 1.2*env_sizeZ;
+G4double world_coef = 1.;
+G4double world_sizeXY = world_coef*env_sizeXY;
+G4double world_sizeZ = world_coef*env_sizeZ;   // it's used again later, you should change both blocks simultaneously!!
 
 F05DetectorConstruction::F05DetectorConstruction()
  : fVacuum(0), world_sizeXY(0), world_sizeZ(0),
@@ -123,8 +125,8 @@ G4VPhysicalVolume* F05DetectorConstruction::Construct()
 
       // Envelope, detector and cover parameters
 
-      G4Material* env_mat = nist->FindOrBuildMaterial("G4_Galactic");
-//      G4Material* env_mat = nist->FindOrBuildMaterial("G4_AIR");
+        G4Material* env_mat = nist->FindOrBuildMaterial("G4_Galactic");
+ //     G4Material* env_mat = nist->FindOrBuildMaterial("G4_AIR");
 
 
       // additional detector, for temporary use - from Kostinsky geometry
@@ -139,10 +141,24 @@ G4VPhysicalVolume* F05DetectorConstruction::Construct()
       // World
       //
 
-    world_sizeXY = 1.2*env_sizeXY;
-    world_sizeZ = 1.2*env_sizeZ;
+// Uncomment it, if "World Box size is too small - (0,0,0)"
+//      from_start_to_the_detector =  4.5*m;     // the parameter
+//      distance = from_start_to_the_detector/2.;    // is used in what follows, it's an auxiliary unit!
+//       from_axis_to_cylinder =  3.0*m;
+//       from_electrode_to_edge_of_the_world = 10.0*cm;
+//                det_sizeZ = 63.*mm;
+//       det_radius = 63.*mm;
+//          cover_sizeZ = 0.5*mm;
+//          cover_thickness = 0.5*mm;
+//           space_under_detector = 10*cm;
+//       space_near_the_edge = 10*cm;
+//      env_sizeXY = 2*( from_axis_to_cylinder + space_near_the_edge + det_radius + cover_thickness);
+//    env_sizeZ = 2*(distance + det_sizeZ + cover_sizeZ + space_under_detector);
+
+    world_sizeXY = world_coef*env_sizeXY;
+    world_sizeZ = world_coef*env_sizeZ;
       G4Material* world_mat = nist->FindOrBuildMaterial("G4_Galactic");
-    //  G4Material* world_mat = nist->FindOrBuildMaterial("G4_AIR");
+   //   G4Material* world_mat = nist->FindOrBuildMaterial("G4_AIR");
 
       solidWorld =
         new G4Box("World",                       //its name
@@ -253,44 +269,6 @@ G4VPhysicalVolume* F05DetectorConstruction::Construct()
           //always return the physical World
           //
           return physWorld;
-
-
-//  //
-//  // World
-//  //
-
-//  fWorldSizeXY = 20.0*m;
-//  fWorldSizeZ  =  1.0*mm;
-
-//  fSolidWorld = new G4Box("World",                               //its name
-//                   fWorldSizeXY/2,fWorldSizeXY/2,fWorldSizeZ/2); //its size
- 
-//  fLogicWorld = new G4LogicalVolume(fSolidWorld,        //its solid
-//                                    fVacuum,            //its material
-//                                    "World");           //its name
- 
-//  fPhysiWorld = new G4PVPlacement(0,                    //no rotation
-//                                  G4ThreeVector(),      //at (0,0,0)
-//                                  fLogicWorld,          //its logical volume
-//                                  "World",              //its name
-//                                  0,                    //its mother  volume
-//                                  false,                //no boolean operation
-//                                  0);                   //copy number
-  
-//  G4UserLimits* stepLimit;
-//  stepLimit = new G4UserLimits(5*mm);
-
-//  fLogicWorld->SetUserLimits(stepLimit);
- 
-//  //
-//  // Visualization attributes
-//  //
-//  // fLogicWorld->SetVisAttributes (G4VisAttributes::GetInvisible());
-
-//  //
-//  //always return the physical World
-//  //
-//  return fPhysiWorld;
 
 
 
