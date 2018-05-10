@@ -1,0 +1,47 @@
+########################################
+#
+# define scoring mesh - DETECTOR
+#
+/score/create/boxMesh boxMesh_det
+#
+/score/mesh/boxSize 1500. 1500. 500. 
+/score/mesh/nBin 20 20 1
+/score/mesh/translate/xyz 0 0  -1500
+#
+/score/quantity/energyDeposit eDepel
+/score/filter/particle eMinusFilter e-
+
+#/score/quantity/energyDeposit eDepgamma
+#/score/filter/particle gammaFilter gamma
+#
+/score/close
+#
+
+
+
+/score/list
+#
+########################################
+#
+/vis/disable
+#/control/verbose 2
+#/run/verbose 1
+#######/event/verbose 1
+#######/tracking/verbose 1
+
+/gun/particle e-
+/run/beamOn 100
+/vis/enable
+#
+########################################
+# drawing projections
+#
+/score/drawProjection boxMesh_det eDepel
+########################################
+# Dump scores to a file
+#
+/score/dumpQuantityToFile boxMesh_det eDepel eDep/eDep_el_det.txt
+#/score/dumpQuantityToFile boxMesh_det eDepgamma eDep/eDep_gamma_det.txt
+
+#
+#
