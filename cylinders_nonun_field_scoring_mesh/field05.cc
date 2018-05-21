@@ -76,7 +76,7 @@ int main(int argc,char** argv)
   //
   G4Random::setTheEngine(new CLHEP::RanecuEngine);
 
-  G4int myseed = 1234;
+  G4int myseed = 1449;
   if (argc  > 2) myseed = atoi(argv[argc-1]);
 
   // Construct the default run manager
@@ -151,7 +151,7 @@ int main(int argc,char** argv)
 #endif
   }
 
-  // Job termination
+   // Job termination
   // Free the store: user actions, physics_list and detector_description are
   //                 owned and deleted by the run manager, so they should not
   //                 be deleted in the main() program !

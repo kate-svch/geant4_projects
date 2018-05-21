@@ -73,20 +73,24 @@
 /vis/scene/add/eventID # Drawn at end of event
 /vis/scene/add/date    # Date stamp
 
-/vis/viewer/set/style wireframe
+#/vis/viewer/set/style wireframe
 # Make the "World" box visible
 #/vis/geometry/set/visibility World 0 false
 /vis/geometry/set/colour World 0 0 1 0 .1
-#/vis/viewer/set/style surface
-/vis/viewer/set/style wireframe
+/vis/viewer/set/style surface
+#/vis/viewer/set/style wireframe
 #/vis/viewer/set/hiddenMarker true
 
 # "Envelope" is transparent blue to represent water
 /vis/geometry/set/colour Envelope 0 0 0 1 .3
-#/vis/viewer/set/style surface
-/vis/viewer/set/style wireframe
+/vis/viewer/set/style surface
+#/vis/viewer/set/style wireframe
 /vis/viewer/set/hiddenMarker true
-/vis/viewer/set/viewpointThetaPhi 110 90
+/vis/viewer/set/viewpointThetaPhi -70 90
 
 /vis/geometry/set/colour Shape1 0 0 1 0 1
-/vis/viewer/set/style wireframe
+#/vis/viewer/set/style wireframe
+/vis/viewer/set/style surface
+
+/vis/geometry/set/colour Al_cover 0 1 0 0 1
+/vis/geometry/set/colour NaI_detector 0 0 1 0 1

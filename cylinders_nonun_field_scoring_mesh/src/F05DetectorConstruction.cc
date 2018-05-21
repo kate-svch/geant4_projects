@@ -38,6 +38,7 @@
 #include "G4NistManager.hh"
 
 #include "G4Box.hh"
+#include "G4Tubs.hh"
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
 
@@ -51,7 +52,6 @@
 
 #include "G4UserLimits.hh"
 #include "G4SystemOfUnits.hh"
-
 #include "F05Field.hh"
 
 #include "G4FieldManager.hh"
@@ -68,21 +68,20 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 // The main parameters
-//G4double kinetic_energy = 1000.*keV;
 
 G4int number_of_events =  100;    // !!! MUST BE THE SAME VALUE AS IN run1.mac !!!
 
-G4double kinetic_energy = 100.*keV;
-G4double from_start_to_the_detector =  4.5*m;     // the parameter - distance from start of the particles to the plane of the detector
+G4double kinetic_energy = 1000.*keV;
+G4double from_start_to_the_detector =  1.*m;     // the parameter - distance from start of the particles to the plane of the detector
 G4double distance = from_start_to_the_detector/2.;    // is used in what follows, it's an auxiliary unit!
-G4double from_axis_to_cylinder =  3.0*m;
+G4double from_axis_to_cylinder =  1.5*m;
 G4double from_electrode_to_edge_of_the_world = 1.0*cm;
 
 G4double det_sizeXY = 3000.*mm; // this is for auxiliary detector and ROOT!!
 
 G4double det_sizeZ = 63.*mm;
 G4double det_radius = 63.*mm;
-G4double cover_sizeZ = 0.5*mm;
+G4double cover_sizeZ = 1.*mm;
 G4double cover_thickness = 0.5*mm;
 G4double space_under_detector = 10*cm;
 G4double space_near_the_edge = 10*cm;
@@ -132,8 +131,8 @@ G4VPhysicalVolume* F05DetectorConstruction::Construct()
 
       // Envelope, detector and cover parameters
 
-        G4Material* env_mat = nist->FindOrBuildMaterial("G4_Galactic");
-  //    G4Material* env_mat = nist->FindOrBuildMaterial("G4_AIR");
+  //      G4Material* env_mat = nist->FindOrBuildMaterial("G4_Galactic");
+      G4Material* env_mat = nist->FindOrBuildMaterial("G4_AIR");
 
       // Option to switch on/off checking of volumes overlaps
       //
@@ -238,38 +237,40 @@ G4VPhysicalVolume* F05DetectorConstruction::Construct()
        G4Material* cover_mat = nist->FindOrBuildMaterial("G4_Al");
 
 
-          // Box shape    - DETECTOR, TEMPORARY
+//          // Box shape    - DETECTOR, TEMPORARY
 
-//             G4Box* solidShape1 =
-//             new G4Box("Shape1",                       //its name
-//                0.5*det_sizeXY , 0.5*det_sizeXY, 0.5*det_sizeZ);     //its size
-
-
-//       G4Box* solidShape1 =
-//       new G4Box("Shape1",                       //its name
-//          1500*mm, 1500*mm, 500*mm);     //its size
-
-       G4Box* solidShape1 =       new G4Box("Shape1",   0.5*det_sizeXY, 0.5*det_sizeXY, 0.5*det_sizeZ);
-
-           G4LogicalVolume* logicShape1 =
-             new G4LogicalVolume(solidShape1,         //its solid
-             //                    shape1_mat,          //its material
-                                 NaI_Tl,
-             //                    NaI,
-                                 "Shape1");           //its name
-
-//        G4ThreeVector pos1 = G4ThreeVector(0, 0. , -(distance+ 0.5*det_sizeZ + cover_sizeZ));
-                G4ThreeVector pos1 = G4ThreeVector(0, 0. ,  -(distance+ 0.5*det_sizeZ + cover_sizeZ));
+////             G4Box* solidShape1 =
+////             new G4Box("Shape1",                       //its name
+////                0.5*det_sizeXY , 0.5*det_sizeXY, 0.5*det_sizeZ);     //its size
 
 
-           new G4PVPlacement(0,                       //rotation
-                             pos1,                    //at position
-                             logicShape1,             //its logical volume
-                             "Shape1",                //its name
-                             logicEnv,                //its mother  volume
-                             false,                   //no boolean operation
-                             0,                       //copy number
-                             checkOverlaps);          //overlaps checking
+////       G4Box* solidShape1 =
+////       new G4Box("Shape1",                       //its name
+////          1500*mm, 1500*mm, 500*mm);     //its size
+
+//       G4Box* solidShape1 =       new G4Box("Shape1",   0.5*det_sizeXY, 0.5*det_sizeXY, 0.5*det_sizeZ);
+
+//           G4LogicalVolume* logicShape1 =
+//             new G4LogicalVolume(solidShape1,         //its solid
+//             //                    shape1_mat,          //its material
+//                                 NaI_Tl,
+//             //                    NaI,
+//                                 "Shape1");           //its name
+
+////        G4ThreeVector pos1 = G4ThreeVector(0, 0. , -(distance+ 0.5*det_sizeZ + cover_sizeZ));
+//                G4ThreeVector pos1 = G4ThreeVector(0, 0. ,  -(distance+ 0.5*det_sizeZ + cover_sizeZ));
+
+
+//           new G4PVPlacement(0,                       //rotation
+//                             pos1,                    //at position
+//                             logicShape1,             //its logical volume
+//                             "Shape1",                //its name
+//                             logicEnv,                //its mother  volume
+//                             false,                   //no boolean operation
+//                             0,                       //copy number
+//                             checkOverlaps);          //overlaps checking
+
+
 
 
 
@@ -308,13 +309,68 @@ G4VPhysicalVolume* F05DetectorConstruction::Construct()
 
 
 
+//       // Cylinder shape    - DETECTOR
+//        // next line defines ring:
+// //       G4Tubs* solid_detectorTube = new G4Tubs("NaI_detector", from_axis_to_cylinder- det_radius, from_axis_to_cylinder+ det_radius, 0.5*det_sizeZ, 0.*deg, 360.*deg);
+//       G4Tubs* solid_detectorTube = new G4Tubs("NaI_detector", 0., from_axis_to_cylinder+ det_radius, 0.5*det_sizeZ, 0.*deg, 360.*deg);
+
+//       G4ThreeVector pos_NaI = G4ThreeVector(0, 0. ,  -(distance+ 0.5*det_sizeZ + cover_sizeZ));
+
+//       G4LogicalVolume* logic_detectorTube =
+//         new G4LogicalVolume(solid_detectorTube,         //its solid
+//                             NaI_Tl,
+//                             "NaI_detector");           //its name
+//       new G4PVPlacement(0,                       //no rotation
+//                         pos_NaI,                    //at position
+//                         logic_detectorTube,             //its logical volume
+//                         "NaI_detector",                //its name
+//                         logicEnv,                //its mother  volume
+//                         false,                   //no boolean operation
+//                         0,                       //copy number
+//                         checkOverlaps);          //overlaps checking
+
+
+
+       // Cylinder shape    - aluminium COVER on the DETECTOR
+
+      // it could be used as "cylindric walls around the Nai-detector"
+       //   G4Tubs* solid_coverTube = new G4Tubs("Al_cover", det_radius, det_radius + cover_thickness, det_sizeZ, 0.*deg, 360.*deg);
+
+       // this is cover UNDER the detector
+        // next line defines ring:
+   //    G4Tubs* solid_coverTube = new G4Tubs("Al_cover", from_axis_to_cylinder-det_radius, from_axis_to_cylinder+det_radius, 0.5*cover_sizeZ, 0.*deg, 360.*deg);
+     G4Tubs* solid_coverTube = new G4Tubs("Al_cover",  0., from_axis_to_cylinder+det_radius, 0.5*cover_sizeZ, 0.*deg, 360.*deg);
+
+       G4LogicalVolume* logic_coverTube =
+         new G4LogicalVolume(solid_coverTube,         //its solid
+                            cover_mat,          //its material
+                             "Al_cover");           //its name
+
+        //  G4ThreeVector pos_cover = G4ThreeVector(from_axis_to_cylinder, -(distance+det_sizeY*0.5+cover_sizeY) + env_sizeY/2.0 + det_sizeY/2., 0);
+     //   G4ThreeVector pos_cover = G4ThreeVector(from_axis_to_cylinder, 0,  -(distance + 0.5*cover_sizeZ)  );
+          G4ThreeVector pos_cover = G4ThreeVector(0, 0,  -(distance + 0.5*cover_sizeZ) );
+
+
+       new G4PVPlacement(0,                        //rotation
+                         pos_cover,                    //at position
+                         logic_coverTube,             //its logical volume
+                         "Al_cover",                //its name
+                         logicEnv,                //its mother  volume
+                         false,                   //no boolean operation
+                         0,                       //copy number
+                         checkOverlaps);          //overlaps checking
+
+
+
+
+
 
           G4UserLimits* stepLimit;
           stepLimit = new G4UserLimits(5*mm);
 
           logicWorld->SetUserLimits(stepLimit);
 
-         fScoringVolume = logicShape1;
+    //     fScoringVolume = logic_detectorTube;
 
           return physWorld;
 

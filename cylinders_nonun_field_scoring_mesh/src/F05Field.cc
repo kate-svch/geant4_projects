@@ -39,7 +39,7 @@
 #include "F05DetectorConstruction.hh"
 
 //const
-G4double q_charge =0.0003*std::pow(10,-4)*coulomb;
+G4double q_charge =3*std::pow(10,-6)*coulomb;   // it approximately corresponds to 3 MV for the distance more than 1 m
 
 extern G4double from_electrode_to_edge_of_the_world;
 extern G4double world_sizeZ;

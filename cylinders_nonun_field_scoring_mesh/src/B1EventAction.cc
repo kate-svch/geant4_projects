@@ -101,7 +101,7 @@ void B1EventAction::BeginOfEventAction(const G4Event*)
 
 //}
 
-void B1EventAction::EndOfEventAction(const G4Event* )
+void B1EventAction::EndOfEventAction(const G4Event* event)
 {
      // accumulate statistics in run action
     fRunAction->AddEdep(fEdep);
@@ -115,6 +115,20 @@ void B1EventAction::EndOfEventAction(const G4Event* )
   if (fEdep != 0) {
   analysisManager->FillH1(0, fEdep);
     }
+
+      G4PrimaryVertex* primaryVertex = event->GetPrimaryVertex();
+      G4PrimaryParticle* primaryParticle = primaryVertex->GetPrimary();
+      G4double ke = primaryParticle->GetKineticEnergy();
+
+      G4cout << G4endl  << G4endl
+       << "cout:--------------------Kinetic energy is:  " << ke << "----------------"    << G4endl << G4endl;
+
+
+
+            G4cerr << G4endl  << G4endl
+           << "cerr:--------------------Kinetic energy is:  " << ke << "----------------"    << G4endl << G4endl;
+
+
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

@@ -306,6 +306,8 @@ void B1RunAction::EndOfRunAction(const G4Run* run)
      << "--------------------End of Local Run------------------------";
   }
   
+
+
   G4cout
      << G4endl
      << " The run consists of " << nofEvents << " "<< runCondition
