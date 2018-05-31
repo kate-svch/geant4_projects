@@ -1,0 +1,58 @@
+########################################
+#
+# define scoring mesh - DETECTOR
+#
+
+/score/create/boxMesh boxMesh_det
+#  sizes are defined as for "G4Box": it must be a half of an actual length, height...
+/score/mesh/boxSize 500. 500. 40. mm 
+/score/mesh/translate/xyz 0 0  -1950.01 mm     # for 4 m distance
+#/score/mesh/translate/xyz 0 0  -1450.01 mm     # for 3 m distance
+#/score/mesh/translate/xyz 0 0  -950.01 mm     # for 2 m distance
+#/score/mesh/translate/xyz 0 0  -450.01 mm     # for 1 m distance
+#/score/mesh/nBin 1 1 1
+#
+/score/quantity/energyDeposit eDepel
+/score/filter/particle eMinusFilter e-
+#
+/score/quantity/nOfStep nOfStepEl
+/score/filter/particle eMinusFilter e-
+#
+/score/quantity/energyDeposit eDepgamma
+/score/filter/particle gammaFilter gamma
+#
+/score/quantity/nOfStep nOfStepGamma
+/score/filter/particle gammaFilter gamma
+#
+/score/close
+#
+
+/score/list
+#
+########################################
+#
+/vis/disable
+#/control/verbose 2
+#/run/verbose 1
+#######/event/verbose 1
+#######/tracking/verbose 1
+
+/gun/particle e-
+/run/beamOn 10000
+/vis/enable
+#
+########################################
+# drawing projections
+#
+/score/drawProjection boxMesh_det nOfStepEl
+#/score/drawProjection boxMesh_det nOfStepGamma
+########################################
+# Dump scores to a file
+#
+/score/dumpQuantityToFile boxMesh_det nOfStepEl eDep/nOfStep_el_det_0.txt
+/score/dumpQuantityToFile boxMesh_det nOfStepGamma eDep/nOfStep_gamma_det_0.txt
+
+/score/dumpQuantityToFile boxMesh_det eDepel eDep/eDep_el_det_0.txt
+/score/dumpQuantityToFile boxMesh_det eDepgamma eDep/eDep_gamma_det_0.txt
+#
+#
