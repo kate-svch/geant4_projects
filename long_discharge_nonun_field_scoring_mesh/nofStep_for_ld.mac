@@ -10,7 +10,7 @@
 #/score/mesh/translate/xyz 0 0  -1450.01 mm     # for 3 m distance
 #/score/mesh/translate/xyz 0 0  -950.01 mm     # for 2 m distance
 #/score/mesh/translate/xyz 0 0  -450.01 mm     # for 1 m distance
-#/score/mesh/nBin 1 1 1
+/score/mesh/nBin 1 1 1
 #
 /score/quantity/energyDeposit eDepel
 /score/filter/particle eMinusFilter e-
